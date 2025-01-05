@@ -10,21 +10,26 @@ local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
 local Toggle = Instance.new("TextButton")
 local Status = Instance.new("TextLabel")
+local Config = Instance.new("ImageButton")
 local StatusWork = Instance.new("TextLabel")
 local Credit = Instance.new("TextLabel")
 local Cross = Instance.new("ImageButton")
+local MediumSpeed = Instance.new("TextLabel")
+local BigSpeedB = Instance.new("TextLabel")
+local MDVvod = Instance.new("TextBox")
+local BSVvod = Instance.new("TextBox")
 local SpeedOn = false
 
 local config = {
-    --Ставить кнопки
-    BaseSpeed = Enum.KeyCode.Z,
-    MediumSpeed = Enum.KeyCode.X,
-    BigSpeed = Enum.KeyCode.C,
-    Fly = Enum.KeyCode.V,
-    Noclip = Enum.KeyCode.G,
+	--Ставить кнопки
+	BaseSpeed = Enum.KeyCode.Z,
+	MediumSpeed = Enum.KeyCode.X,
+	BigSpeed = Enum.KeyCode.C,
+	Fly = Enum.KeyCode.V,
+	Noclip = Enum.KeyCode.G,
 
-    --Скорость среднего бега
-    MediumConfig = 40
+	--Скорость среднего бега
+	--MediumConfig = MDVvod.ContentText
 }
 
 print("WalkHack has been Activated")
@@ -70,6 +75,12 @@ Toggle.TextColor3 = Color3.new(1, 1, 1)
 Toggle.TextSize = 25
 Toggle.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
 Toggle.TextStrokeTransparency = 0
+
+Config.Name = "Config"
+Config.Parent = Frame
+Config.Size = UDim2.new(0, 15,0, 15)
+Config.Position = UDim2.new(0.9, 0,0.071, 0)
+Config.BackgroundColor3 = Color3.new(0, 0.666667, 0.498039)
 
 Status.Name = "Status"
 Status.Parent = Frame
@@ -123,85 +134,181 @@ Cross.Position = UDim2.new(0, 0,0, 0)
 Cross.Size = UDim2.new(0, 33,0, 33)
 Cross.ImageColor3 = Color3.new(0.333333, 0.666667, 0.498039)
 
+MediumSpeed.Name = "MediumSpeed"
+MediumSpeed.Parent = Frame
+MediumSpeed.BackgroundColor3 = Color3.new(1, 1, 1)
+MediumSpeed.BackgroundTransparency = 1
+MediumSpeed.Position = UDim2.new(0, 0,0.323, 0)
+MediumSpeed.Size = UDim2.new(0, 118,0, 25)
+MediumSpeed.Font = Enum.Font.SourceSans
+MediumSpeed.FontSize = Enum.FontSize.Size18
+MediumSpeed.Text = "Medium Speed:"
+MediumSpeed.TextColor3 = Color3.new(1, 1, 1)
+MediumSpeed.TextSize = 20
+MediumSpeed.TextStrokeColor3 = Color3.new(0, 1, 0.498039)
+MediumSpeed.TextStrokeTransparency = 0
+MediumSpeed.TextWrapped = true
+
+BigSpeedB.Name = "BigSpeedB"
+BigSpeedB.Parent = Frame
+BigSpeedB.BackgroundColor3 = Color3.new(1, 1, 1)
+BigSpeedB.BackgroundTransparency = 1
+BigSpeedB.Position = UDim2.new(0.029, 0,0.606, 0)
+BigSpeedB.Size = UDim2.new(0, 112,0, 25)
+BigSpeedB.Font = Enum.Font.SourceSans
+BigSpeedB.FontSize = Enum.FontSize.Size18
+BigSpeedB.Text = "Big Sp Button:"
+BigSpeedB.TextColor3 = Color3.new(1, 1, 1)
+BigSpeedB.TextSize = 20
+BigSpeedB.TextStrokeColor3 = Color3.new(0, 1, 0.498039)
+BigSpeedB.TextStrokeTransparency = 0
+BigSpeedB.TextWrapped = true
+
+MDVvod.Name = "MDVvod"
+MDVvod.Parent = Frame
+MDVvod.BackgroundColor3 = Color3.new(0, 1, 0.498039)
+MDVvod.BackgroundTransparency = 0.5
+MDVvod.Position = UDim2.new(0.605, 0,0.323, 0)
+MDVvod.Size = UDim2.new(0, 75,0, 25)
+MDVvod.Font = Enum.Font.SourceSans
+MDVvod.FontSize = Enum.FontSize.Size18
+MDVvod.Text = "40"
+MDVvod.TextColor3 = Color3.new(0,0,0)
+MDVvod.TextSize = 17
+MDVvod.TextStrokeColor3 = Color3.new(0, 1, 0.498039)
+MDVvod.TextStrokeTransparency = 0
+MDVvod.TextWrapped = true
+
+BSVvod.Name = "BSVvod"
+BSVvod.Parent = Frame
+BSVvod.BackgroundColor3 = Color3.new(0, 1, 0.498039)
+BSVvod.BackgroundTransparency = 0.5
+BSVvod.Position = UDim2.new(0.605, 0,0.606, 0)
+BSVvod.Size = UDim2.new(0, 75,0, 25)
+BSVvod.Font = Enum.Font.SourceSans
+BSVvod.FontSize = Enum.FontSize.Size18
+BSVvod.Text = "C"
+BSVvod.TextColor3 = Color3.new(0,0,0)
+BSVvod.TextSize = 17
+BSVvod.TextStrokeColor3 = Color3.new(0, 1, 0.498039)
+BSVvod.TextStrokeTransparency = 0
+BSVvod.TextWrapped = true
+
+MediumSpeed.Visible = false
+BigSpeedB.Visible = false
+MDVvod.Visible = false
+BSVvod.Visible = false
+
 local debounce = false
 local flyDebounce = false
 local Fly = false
 local Noclip = false
 local NoclipDebounce = false
+local ConfigOpenned = false
+
+Config.MouseButton1Click:Connect(function()  
+	if not ConfigOpenned then
+		ConfigOpenned = true
+		Toggle.Visible = false
+		Status.Visible = false
+		StatusWork.Visible = false
+		Credit.Visible = false
+		MediumSpeed.Visible = true
+		BigSpeedB.Visible = true
+		MDVvod.Visible = true
+		BSVvod.Visible = true
+		Title.Text = "Configuration"
+	else
+		ConfigOpenned = false
+		Toggle.Visible = true
+		Status.Visible = true
+		StatusWork.Visible = true
+		Credit.Visible = true
+		MediumSpeed.Visible = false
+		BigSpeedB.Visible = false
+		MDVvod.Visible = false
+		BSVvod.Visible = false
+		Title.Text = "WalkSpeed"
+	end
+end)
 
 UserInputService.InputBegan:Connect(function(input, isTyping)
-    if isTyping then return end
-    if input.KeyCode == config.BigSpeed and SpeedOn == true then
-        player.Character.Humanoid.WalkSpeed = 200
-    end
-    if input.KeyCode == config.MediumSpeed and SpeedOn == true then
-        player.Character.Humanoid.WalkSpeed = config.MediumConfig
-    end
-    if input.KeyCode == config.BaseSpeed and SpeedOn == true then
-        player.Character.Humanoid.WalkSpeed = 16
-    end
-    if input.KeyCode == config.Fly and SpeedOn == true and flyDebounce == false then
-        flyDebounce = true
-        Fly = true
-        print("Полёт включен")
-    elseif input.KeyCode == config.Fly and SpeedOn == true and flyDebounce == true then
-        flyDebounce = false
-        Fly = false
-        print("Полёт выключен")
-    end
-    if input.KeyCode == config.Noclip and SpeedOn == true and NoclipDebounce == false then
-        NoclipDebounce = true
-        Noclip = true
-        if Noclip then
-            player.Character.UpperTorso.CanCollide = false
-            player.Character.LowerTorso.CanCollide = false
-            player.Character.HumanoidRootPart.CanCollide = false
-        else
-            player.Character.UpperTorso.CanCollide = true
-            player.Character.LowerTorso.CanCollide = true
-            player.Character.HumanoidRootPart.CanCollide = true
-        end
-        print("Noclip включен")
-    elseif input.KeyCode == config.Noclip and SpeedOn == true and NoclipDebounce == true then
-        NoclipDebounce = false
-        Noclip = false
-        if Noclip then
-            player.Character.UpperTorso.CanCollide = false
-            player.Character.LowerTorso.CanCollide = false
-            player.Character.HumanoidRootPart.CanCollide = false
-        else
-            player.Character.UpperTorso.CanCollide = true
-            player.Character.LowerTorso.CanCollide = true
-            player.Character.HumanoidRootPart.CanCollide = true
-        end
-        print("Noclip выключен")
-    end
+	if isTyping then return end
+	if input.KeyCode == config.BigSpeed and SpeedOn == true then
+		player.Character.Humanoid.WalkSpeed = 200
+	end
+	if input.KeyCode == config.MediumSpeed and SpeedOn == true then
+		if tonumber(MDVvod.ContentText) ~= nil then
+			player.Character.Humanoid.WalkSpeed = tonumber(MDVvod.ContentText)
+		else
+			warn("Unknown number")
+		end
+	end
+	if input.KeyCode == config.BaseSpeed and SpeedOn == true then
+		player.Character.Humanoid.WalkSpeed = 16
+	end
+	if input.KeyCode == config.Fly and SpeedOn == true and flyDebounce == false then
+		flyDebounce = true
+		Fly = true
+		print("Полёт включен")
+	elseif input.KeyCode == config.Fly and SpeedOn == true and flyDebounce == true then
+		flyDebounce = false
+		Fly = false
+		print("Полёт выключен")
+	end
+	if input.KeyCode == config.Noclip and SpeedOn == true and NoclipDebounce == false then
+		NoclipDebounce = true
+		Noclip = true
+		if Noclip then
+			player.Character.UpperTorso.CanCollide = false
+			player.Character.LowerTorso.CanCollide = false
+			player.Character.HumanoidRootPart.CanCollide = false
+		else
+			player.Character.UpperTorso.CanCollide = true
+			player.Character.LowerTorso.CanCollide = true
+			player.Character.HumanoidRootPart.CanCollide = true
+		end
+		print("Noclip включен")
+	elseif input.KeyCode == config.Noclip and SpeedOn == true and NoclipDebounce == true then
+		NoclipDebounce = false
+		Noclip = false
+		if Noclip then
+			player.Character.UpperTorso.CanCollide = false
+			player.Character.LowerTorso.CanCollide = false
+			player.Character.HumanoidRootPart.CanCollide = false
+		else
+			player.Character.UpperTorso.CanCollide = true
+			player.Character.LowerTorso.CanCollide = true
+			player.Character.HumanoidRootPart.CanCollide = true
+		end
+		print("Noclip выключен")
+	end
 end)
 
 UserInputService.JumpRequest:Connect(function()  
-    if Fly == true then
-        player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    end
+	if Fly == true then
+		player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+	end
 end)
 
 Toggle.MouseButton1Click:Connect(function()  
-    if StatusWork.Text == "off" then
-        SpeedOn = true
-        StatusWork.Text = "on"
-        StatusWork.TextColor3 = Color3.new(0, 0.70, 0)
-    else
-        Fly = false
-        SpeedOn = false
-        StatusWork.Text = "off"
-        StatusWork.TextColor3 = Color3.new(0.50, 0, 0)
-        player.Character.Humanoid.WalkSpeed = 16
-    end
+	if StatusWork.Text == "off" then
+		SpeedOn = true
+		StatusWork.Text = "on"
+		StatusWork.TextColor3 = Color3.new(0, 0.70, 0)
+	else
+		Fly = false
+		SpeedOn = false
+		StatusWork.Text = "off"
+		StatusWork.TextColor3 = Color3.new(0.50, 0, 0)
+		player.Character.Humanoid.WalkSpeed = 16
+	end
 end)
 
 Cross.MouseButton1Click:Connect(function()
-    Noclip = false
-    Fly = false
-    SpeedOn = false
-    WalkHack:Destroy()
-    print("WalkHack has been closed")
+	Noclip = false
+	Fly = false
+	SpeedOn = false
+	WalkHack:Destroy()
+	print("WalkHack has been closed")
 end)
